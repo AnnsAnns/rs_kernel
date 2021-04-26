@@ -3,19 +3,18 @@
 
 mod vga_buffer;
 
-use vga_buffer::Writer;
 use core::{panic::PanicInfo};
 
 #[panic_handler]
-fn panic(_info: &PanicInfo) -> ! {
+fn panic(info: &PanicInfo) -> ! {
+    println!("{}", info);
     loop {}
 }
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    let mut writer = Writer::new();
-
     loop {
-        writer.write_string("Poggers Moment ");
+        println!("PoggersOS eating your whole CPU because it can");
+        panic!("Computer machine broke")
     }
 }
