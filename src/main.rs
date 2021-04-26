@@ -3,7 +3,8 @@
 
 mod vga_buffer;
 
-use core::panic::PanicInfo;
+use vga_buffer::Writer;
+use core::{panic::PanicInfo};
 
 #[panic_handler]
 fn panic(_info: &PanicInfo) -> ! {
@@ -12,7 +13,9 @@ fn panic(_info: &PanicInfo) -> ! {
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    vga_buffer::print_something();
+    let mut writer = Writer::new();
 
-    loop {}
+    loop {
+        writer.write_string("Poggers Moment ");
+    }
 }
