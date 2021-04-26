@@ -1,6 +1,8 @@
+#![feature(abi_x86_interrupt)]
 #![no_std]
 #![no_main]
 
+pub mod interrupts;
 mod vga_buffer;
 
 use core::{panic::PanicInfo};
@@ -13,8 +15,13 @@ fn panic(info: &PanicInfo) -> ! {
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    println!("PoggersOS starting ...");
+
+    interrupts::init_idt();
+
+    x86_64::instructions::interrupts::int3();
+
     loop {
-        println!("PoggersOS eating your whole CPU because it can");
         panic!("Computer machine broke")
     }
 }
